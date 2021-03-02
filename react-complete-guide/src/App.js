@@ -11,7 +11,7 @@ const App = props => {
       { name : 'Yamac', age:2}
   ]
  });
-//replaces the old one not merges! This is super important!If you want to get the old data the elegant way is using useState('someOtherValue')
+//replaces the old one, not merges! This is super important!If you want to get the old data the elegant way is using useState('someOtherValue')
  const [otherState, setOtherState]= useState({otherState: 'some other value'})
 
  console.log(personsState,otherState);
@@ -32,7 +32,7 @@ const App = props => {
     <p>This is really working!</p>
     <button onClick={switchNameHandler}>Switch Name</button>
     <Person name={personsState.persons[0].name} age={personsState.persons[0].age} />
-    <Person name={personsState.persons[1].name} age={personsState.persons[1].age}>My Hobbies: Codding❤️🧿 </Person>
+    <Person name={personsState.persons[1].name} age={personsState.persons[1].age}>My Hobbies: Coding❤️🧿 </Person>
     <Person name={personsState.persons[2].name} age={personsState.persons[2].age} />
     </div>
    ) 
