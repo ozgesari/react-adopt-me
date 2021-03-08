@@ -1,25 +1,25 @@
-import React, {useState } from 'react';
+import { buildQueries } from '@testing-library/dom';
+import React, {Component } from 'react';
 import './App.css';
 import Person from './Person/Person';
 
 
-const App = props => {
- const [personsState, setPersonsState] = useState({
+class  App extends Component {
+state={
     persons : [
       { name : 'Yazmin', age:5},
       { name : 'Arya', age:3},
       { name : 'Yamac', age:2}
-  ]
- });
+  ],
+  otherState:'Some other state'
+ };
  // container, stateful, smart component
  // presentational, stateless or dump
 // replaces the old one, not merges! This is super important!If you want to get the old data the elegant way is using useState('someOtherValue')
- const [otherState, setOtherState]= useState({otherState: 'some other value'})
 
- console.log(personsState,otherState);
 
- const switchNameHandler = (newName) => {
-   setPersonsState({ 
+  switchNameHandler = (newName) => {
+   this.setState({ 
      persons : [
      { name : newName, age:4},
      { name : 'Arya', age:3},
@@ -28,8 +28,8 @@ const App = props => {
  }
 
 
- const NameChangeHandler = (event) => {
-  setPersonsState({ 
+  NameChangeHandler = (event) => {
+  this.setState({ 
     persons : [
     { name : 'Max', age:4},
     { name : event.target.value, age:3},
@@ -37,26 +37,33 @@ const App = props => {
 ]})
 }
 
-  return (
+  render() {
+    const style = {
+      backgroundColor:'white',
+      font:'inherit',
+      border:'1px solid blue',
+      padding: '8px',
+      cursor:'pointer'
+    }
+
+    return(
     <div className="App">
     <h1>Hello, it's me.</h1>
     <p>This is really working!</p>
       {/* arrow function is inefficient way, use bind intstead. */}
-    <button onClick={() => switchNameHandler('Pinar')}>Switch Name</button>
+    <button style={style} onClick={() => this.switchNameHandler('Pinar')}>Switch Name</button>
     <Person
-     name={personsState.persons[0].name} age={personsState.persons[0].age} />
+     name={this.state.persons[0].name} age={this.state.persons[0].age} />
     <Person 
-     name={personsState.persons[1].name}
-      age={personsState.persons[1].age}
-      click={switchNameHandler.bind(this, 'Eray!')}
-      changed={NameChangeHandler}
+     name={this.state.persons[1].name}
+      age={this.state.persons[1].age}
+      click={this.switchNameHandler.bind(this, 'Eray!')}
+      changed={this.NameChangeHandler}
       >My Hobbies: Coding❤️🧿 </Person>
     <Person 
-    name={personsState.persons[2].name} age={personsState.persons[2].age} />
+    name={this.state.persons[2].name} age={this.state.persons[2].age} />
     </div>
-   ) 
-  }
-
+    )}
+}
 export default App;
-
 
