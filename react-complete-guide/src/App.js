@@ -6,9 +6,9 @@ import Person from './Person/Person';
 class App extends Component {
   state = {
     persons: [
-      { name: 'Yazmin', age: 5 },
-      { name: 'Arya', age: 3 },
-      { name: 'Yamac', age: 2 }
+      { id:"fsdfd", name: 'Yazmin', age: 5 },
+      { id:"fdsf", name: 'Arya', age: 3 },
+      { id:"fsdfsdfsdfd",  name: 'Yamac', age: 2 }
     ],
     otherState: 'Some other state',
     showPersons: false
@@ -17,26 +17,31 @@ class App extends Component {
   // presentational, stateless or dump
   // replaces the old one, not merges! This is super important!If you want to get the old data the elegant way is using useState('someOtherValue')
 
-
-  switchNameHandler = (newName) => {
-    this.setState({
-      persons: [
-        { name: newName, age: 4 },
-        { name: 'Arya', age: 3 },
-        { name: 'Yamac', age: 1 }
-      ]
-    })
+  deletePersonHandler = (personIndex) => {
+        //Below way we indicate the original data of the state. That's why it throws array. We should indicate the copy of it
+    // const doesShow =this.state.showPersons;
+    //  const doesShow =this.state.showPersons.slice() slice without argument copies the full array.;
+    // es6 feaure spread feature. new array with the object from the old array, not the old array itself
+    const persons = [...this.state.persons];
+    persons.splice(personIndex, 1);
+    this.setState({persons: persons})
   }
 
 
-  NameChangeHandler = (event) => {
-    this.setState({
-      persons: [
-        { name: 'Max', age: 4 },
-        { name: event.target.value, age: 3 },
-        { name: 'Yamac', age: 1 }
-      ]
-    })
+  NameChangeHandler = (event, id) => {
+    const personIndex = this.state.persons.findIndex(p => {
+      return p.id === id;
+    });
+
+    const person = {...this.state.persons[personIndex]};
+
+    // const person = Object.assign({}, this.state.persons[personIndex])
+    person.name = event.target.value;
+    const persons = [...this.state.persons];
+    persons[personIndex] = person; 
+
+
+    this.setState({  persons: persons })
   }
 
   toggleNameHandler = () => {
@@ -59,18 +64,16 @@ class App extends Component {
 
     if(this.state.showPersons){
       persons = (
-        <div>
-          <Person
-            name={this.state.persons[0].name} age={this.state.persons[0].age} />
-          <Person
-            name={this.state.persons[1].name}
-            age={this.state.persons[1].age}
-            click={this.switchNameHandler.bind(this, 'Eray!')}
-            changed={this.NameChangeHandler}
-          >My Hobbies: Coding❤️🧿 </Person>
-          <Person
-            name={this.state.persons[2].name} age={this.state.persons[2].age} />
-        </div>
+      <div>
+        {this.state.persons.map((person, index) => {
+          return <Person 
+          click={()=> this.deletePersonHandler(index)}
+          name = {person.name}
+          age= {person.age}  
+          key={person.id}
+          changed={(event) => this.NameChangeHandler(event, person.id)}/>
+        })}
+      </div>
       )
     }
 
