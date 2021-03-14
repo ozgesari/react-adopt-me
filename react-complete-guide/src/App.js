@@ -54,13 +54,11 @@ class App extends Component {
       cursor: 'pointer'
     }
 
-    return (
-      <div className="App">
-        <h1>Hello, it's me.</h1>
-        <p>This is really working!</p>
-        {/* arrow function is inefficient way, use bind intstead. */}
-        <button style={style} onClick={ this.toggleNameHandler }>Toogle Name</button>
-      { this.state.showPersons ?
+
+    let persons = null;
+
+    if(this.state.showPersons){
+      persons = (
         <div>
           <Person
             name={this.state.persons[0].name} age={this.state.persons[0].age} />
@@ -72,8 +70,17 @@ class App extends Component {
           >My Hobbies: Coding❤️🧿 </Person>
           <Person
             name={this.state.persons[2].name} age={this.state.persons[2].age} />
-        </div> : null
-      }
+        </div>
+      )
+    }
+
+    return (
+      <div className="App">
+        <h1>Hello, it's me.</h1>
+        <p>This is really working!</p>
+        {/* arrow function is inefficient way, use bind intstead. */}
+        <button style={style} onClick={ this.toggleNameHandler }>Toogle Name</button>
+        {persons}
       </div>
     )
   }
