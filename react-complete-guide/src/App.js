@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Person from './Person/Person';
+import Radium from 'radium';
 
 
 class App extends Component {
@@ -57,12 +58,24 @@ class App extends Component {
       font: 'inherit',
       border: '1px solid blue',
       padding: '8px',
-      cursor: 'pointer'
+      cursor: 'pointer',
+      ':hover': {
+        backgroundColor: 'lightgreen',
+        color: 'black'
+      }
     }
 
 
     let persons = null;
-    let classes =['red', 'bold'].join(' ');
+    const classes =[];
+
+    if(this.state.persons.length <=2) {
+      classes.push('red'); // classes = ['red']
+    }
+
+    if(this.state.persons.length <=1) {
+      classes.push('bold');  // classes = ['red', 'bold']
+    }
     
     if(this.state.showPersons){
       persons = (
@@ -78,17 +91,21 @@ class App extends Component {
       </div>
       )
       style.backgroundColor = 'red';
+      style[':hover'] = {
+        backgroundColor: 'salmon',
+        color: 'black'
+
+      }
     }
 
     return (
       <div className="App">
         <h1>Hello, it's me.</h1>
-        <p className={classes}>This is really working!</p>
-        {/* arrow function is inefficient way, use bind intstead. */}
+        <p className={classes.join(' ')}>This is really working!</p>
         <button style={style} onClick={ this.toggleNameHandler }>Toogle Name</button>
         {persons}
       </div>
     )
   }
 }
-export default App;
+export default Radium(App);
