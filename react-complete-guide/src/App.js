@@ -52,7 +52,8 @@ class App extends Component {
 
   render() {
     const style = {
-      backgroundColor: 'white',
+      backgroundColor: 'green',
+      color:'white',
       font: 'inherit',
       border: '1px solid blue',
       padding: '8px',
@@ -61,7 +62,8 @@ class App extends Component {
 
 
     let persons = null;
-
+    let classes =['red', 'bold'].join(' ');
+    
     if(this.state.showPersons){
       persons = (
       <div>
@@ -75,12 +77,13 @@ class App extends Component {
         })}
       </div>
       )
+      style.backgroundColor = 'red';
     }
 
     return (
       <div className="App">
         <h1>Hello, it's me.</h1>
-        <p>This is really working!</p>
+        <p className={classes}>This is really working!</p>
         {/* arrow function is inefficient way, use bind intstead. */}
         <button style={style} onClick={ this.toggleNameHandler }>Toogle Name</button>
         {persons}
