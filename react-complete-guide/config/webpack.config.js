@@ -110,11 +110,7 @@ module.exports = function (webpackEnv) {
       },
       {
         loader: require.resolve('css-loader'),
-        options: {
-          importLoaders :1,
-          modules:true,
-          localIdentName: '[name]__[local]__[hash:base64:5]'
-        },
+        options: cssOptions,
       },
       {
         // Options for PostCSS as we reference these options twice
@@ -475,7 +471,10 @@ module.exports = function (webpackEnv) {
               test: cssRegex,
               exclude: cssModuleRegex,
               use: getStyleLoaders({
-                importLoaders: 1,
+                modules: {
+                  localIdentName: "[name]__[local]___[hash:base64:5]"
+                },
+                importLoaders: 1,   
                 sourceMap: isEnvProduction
                   ? shouldUseSourceMap
                   : isEnvDevelopment,
