@@ -1,5 +1,6 @@
 import React from  'react';
 import styled from 'styled-components';
+import { ContextExclusionPlugin } from 'webpack';
 
 import  './Person.css';
 
@@ -18,6 +19,13 @@ text-align:center;
 const person = (props) => {
     // min-width : equal or greater than
     // max-width : between 0 and 500px
+
+    const rnd = Math.random();
+
+    if(rnd > 0.7){
+        throw new Error('Something wen wrong')
+    }
+
     return (
        <StyledDiv>
              <p onClick={props.click}>I'm {props.name} and I am { props.age } years old!</p>
