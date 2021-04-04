@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import classes from "./App.css";
+import ErrorBoundary from "./ErrorBoundary/ErrorBoundary";
 import Person from "./Person/Person";
 
 class App extends Component {
@@ -12,9 +13,9 @@ class App extends Component {
     otherState: "Some other state",
     showPersons: false,
   };
-    // container, stateful, smart component
-    // presentational, stateless or dump
-    // replaces the old one, not merges! This is super important!If you want to get the old data the elegant way is using useState('someOtherValue')
+  // container, stateful, smart component
+  // presentational, stateless or dump
+  // replaces the old one, not merges! This is super important!If you want to get the old data the elegant way is using useState('someOtherValue')
 
   deletePersonHandler = (personIndex) => {
     // const doesShow =this.state.showPersons.slice() slice without argument copies the full array.;
@@ -24,9 +25,20 @@ class App extends Component {
     this.setState({ persons: persons });
   };
 
+
+  // First way!!!
+  // Let's say accidentally userId instead of id.When you type in input, you wont be able to see the error that occurs.
+  // You can use Chrome dev tool, then go Sources, map the file you work on it. Put a breakpoint to chase it.
+
+  // Second way!!!
+  // Using Error Boundaries!!
+
+
+
+
   NameChangeHandler = (event, id) => {
     const personIndex = this.state.persons.findIndex((p) => {
-      return p.id === id;
+      return p.userId === id;
     });
 
     const person = { ...this.state.persons[personIndex] };
@@ -55,7 +67,7 @@ class App extends Component {
       persons = (
         <div>
           {this.state.persons.map((person, index) => {
-            return (
+            return <ErrorBoundary>
               <Person
                 click={() => this.deletePersonHandler(index)}
                 name={person.name}
@@ -63,7 +75,7 @@ class App extends Component {
                 key={person.id}
                 changed={(event) => this.NameChangeHandler(event, person.id)}
               />
-            );
+            </ErrorBoundary>
           })}
         </div>
       );
