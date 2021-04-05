@@ -76,7 +76,7 @@ class App extends Component {
                 changed={(event) => this.NameChangeHandler(event, person.id)}
               />
             </ErrorBoundary>
-          })}
+          })};
         </div>
       );
 
