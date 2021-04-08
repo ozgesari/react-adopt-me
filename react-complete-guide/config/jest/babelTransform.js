@@ -1,7 +1,6 @@
 'use strict';
 
 const babelJest = require('babel-jest');
-
 const hasJsxRuntime = (() => {
   if (process.env.DISABLE_NEW_JSX_TRANSFORM === 'true') {
     return false;
@@ -22,8 +21,9 @@ module.exports = babelJest.createTransformer({
       {
         runtime: hasJsxRuntime ? 'automatic' : 'classic',
       },
+
     ],
   ],
   babelrc: false,
-  configFile: false,
+  configFile: false
 });
