@@ -19,7 +19,7 @@ text-align:center;
 const person = (props) => {
     // min-width : equal or greater than
     // max-width : between 0 and 500px
-
+    console.log('[Person.js] rendering...')
     return (
         <StyledDiv>
             <p onClick={props.click}>I'm {props.name} and I am {props.age} years old!</p>
