@@ -17,6 +17,8 @@ class App extends Component {
     ],
     otherState: "Some other state",
     showPersons: false,
+    showCockpit: true,
+    changeCounter: 0
   };
 
   static getDerivedStateFromProps(props, state) {
@@ -46,7 +48,7 @@ class App extends Component {
 
   nameChangeHandler = (event, id) => {
     const personIndex = this.state.persons.findIndex((p) => {
-      return p.userId === id;
+      return p.id === id;
     });
 
     const person = { ...this.state.persons[personIndex] };
@@ -55,7 +57,13 @@ class App extends Component {
     const persons = [...this.state.persons];
     persons[personIndex] = person;
 
-    this.setState({ persons: persons });
+    // Super important to keep that in mind. You change the state and depend on old state.
+    this.setState((prevState, props) => {
+      return {
+        persons: persons,
+        changeCounter: prevState.changeCounter + 1
+      }
+    });
   };
 
   toggleNameHandler = () => {
@@ -64,7 +72,6 @@ class App extends Component {
   };
 
   render() {
-
     console.log('[App.js] render')
     let persons = null;
 
@@ -79,14 +86,20 @@ class App extends Component {
 
     return (
       <div className={classes.App}>
-        <Cockpit
-          title={this.props.appTitle}
-          showPersons={this.state.showPersons}
-          persons={this.state.persons}
-          clicked={this.toggleNameHandler}
-        />
-        {persons}
-      </div>
+        <button onClick={() => { this.setState({ showCockpit: false }) }}>
+          Remove Cockpit
+        </button>
+        {
+          this.state.showCockpit ?
+            <Cockpit
+              title={this.props.appTitle}
+              showPersons={this.state.showPersons}
+              personLength={this.state.persons.length}
+              clicked={this.toggleNameHandler}
+            /> : null
+        }
+        { persons}
+      </div >
     );
   }
 }
