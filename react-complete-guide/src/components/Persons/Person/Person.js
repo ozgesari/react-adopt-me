@@ -10,12 +10,11 @@ class Person extends Component {
     }
 
     componentDidMount() {
-        this.inputElementRef.current.focus()
+        this.inputElementRef.current.focus();
     }
 
-
     render() {
-        console.log('[Person.js] rendering...')
+        console.log('[Person.js] rendering...');
         return (
             <div className={classes.Person}>
                 <p onClick={this.props.click}>I'm {this.props.name} and I am
