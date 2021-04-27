@@ -23,10 +23,6 @@ class App extends Component {
     authenticated: false
   };
 
-  static getDerivedStateFromProps(props, state) {
-    console.log('[App.js] getDerivedStateFromProps', props)
-    return state;
-  }
 
 
   componentDidMount() {
